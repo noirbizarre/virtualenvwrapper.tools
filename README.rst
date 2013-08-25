@@ -1,4 +1,8 @@
 virtualenvwrapper.tools
 =======================
 
-Some virtualenvwrapper extensions
+Some virtualenvwrapper extensions.
+
+These are extensions I use.
+
+

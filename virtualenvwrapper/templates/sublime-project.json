@@ -1,0 +1,48 @@
+{{
+    "folders":
+    [
+        {{
+            "folder_exclude_patterns":
+                [
+                    "node_modules",
+                    "staticroot",
+                    "*.egg-info",
+                    "*.dotcloud",
+                    "__pycache__",
+                    ".tox"
+                ],
+            "follow_symlinks": true,
+            "path": "{project_dir}"
+        }}
+    ],
+    "build_systems":
+    [
+        {{
+            "name": "{project} tests",
+            "cmd": [ "make", "test" ],
+            "env": {{
+                "PATH": "{path}"
+            }},
+            "working_dir": "${{project_path}}"
+        }},
+        {{
+            "name": "{project} reports",
+            "cmd": [ "make", "reports" ],
+            "env": {{
+                "PATH": "{path}"
+            }},
+            "working_dir": "${{project_path}}"
+        }},
+        {{
+            "cmd": [ "make", "doc" ],
+            "env": {{
+                "PATH": "{path}"
+            }},
+            "name": "{project} documentation",
+            "working_dir": "${{project_path}}"
+        }}
+    ],
+    "settings": {{
+        "python_interpreter_path": "{virtualenv}/bin/python"
+    }}
+}}
