@@ -44,4 +44,4 @@ def template(args):
     with open(filename, 'wb') as sublime_project_file:
         sublime_project_file.write(content.encode('utf8'))
 
-    subprocess.call(['subl', filename], shell=False)
+    subprocess.call(['subl', '--project', filename], shell=False)
