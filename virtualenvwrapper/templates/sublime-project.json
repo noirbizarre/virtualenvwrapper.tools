@@ -12,37 +12,31 @@
                     ".tox"
                 ],
             "follow_symlinks": true,
-            "path": "{project_dir}"
+            "path": "{project}"
         }}
     ],
     "build_systems":
     [
         {{
-            "name": "{project} tests",
+            "name": "{project} makefile",
             "cmd": [ "make", "test" ],
             "env": {{
                 "PATH": "{path}"
             }},
-            "working_dir": "${{project_path}}"
+            "working_dir": "${{project_path}}/{project}"
         }},
         {{
-            "name": "{project} reports",
-            "cmd": [ "make", "reports" ],
+            "name": "{project} fabric",
+            "cmd": [ "fab", "test" ],
             "env": {{
                 "PATH": "{path}"
             }},
-            "working_dir": "${{project_path}}"
-        }},
-        {{
-            "cmd": [ "make", "doc" ],
-            "env": {{
-                "PATH": "{path}"
-            }},
-            "name": "{project} documentation",
-            "working_dir": "${{project_path}}"
+            "working_dir": "${{project_path}}/{project}"
         }}
     ],
     "settings": {{
-        "python_interpreter_path": "{virtualenv}/bin/python"
+        "python_interpreter": "{virtualenv}/bin/python",
+        "python_interpreter_path": "{virtualenv}/bin/python",
+        "pep8_rcfile": "{project}/pep8.rc",
     }}
 }}

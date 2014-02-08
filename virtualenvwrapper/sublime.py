@@ -3,14 +3,28 @@
 
 import logging
 import os
+import sys
 import subprocess
 from pkg_resources import resource_string
+
+PY3 = sys.version > '3'
+
+if PY3:
+    from subprocess import getstatusoutput
+else:
+    from commands import getstatusoutput
+
 
 log = logging.getLogger(__name__)
 
 
 def get_sublime_project_filename(project):
     return os.path.join(os.environ.get('PROJECT_HOME'), '{0}.sublime-project'.format(project))
+
+
+def has_bin(name):
+    status, _ = getstatusoutput('which {0}'.format(name))
+    return status == 0
 
 
 def build_path(virtualenv):
@@ -32,7 +46,7 @@ def template(args):
 
     log.info('Creating Sublime Text project file')
 
-    template = resource_string(__name__, 'templates/sublime-project.json')
+    template = resource_string(__name__, 'templates/sublime-project.json').decode('utf8')
 
     content = template.format(
         project=project,
@@ -44,4 +58,7 @@ def template(args):
     with open(filename, 'wb') as sublime_project_file:
         sublime_project_file.write(content.encode('utf8'))
 
-    subprocess.call(['subl', '--project', filename], shell=False)
+    for cmd in ('subl', 'subl3'):
+        if has_bin(cmd):
+            subprocess.call([cmd, '--project', filename], shell=False)
+            break

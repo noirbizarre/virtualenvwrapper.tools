@@ -22,6 +22,6 @@ def template(args):
     url = get_url(project)
     if url:
         log.info('Cloning %s', url)
-        print 'Cloning {}'.format(url)
+        print('Cloning {0}'.format(url))
         subprocess.call(['git', 'clone', url, project_dir, '-o', 'github'], shell=False)
     return

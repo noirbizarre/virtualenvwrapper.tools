@@ -52,20 +52,20 @@ def template(args):
 
     # Copy files
     for filename in FILES:
-        content = resource_string(__name__, 'templates/{0}'.format(filename))
+        content = resource_string(__name__, 'templates/{0}'.format(filename)).decode('utf8')
         with open(join(project_dir, filename), 'wb') as f:
             f.write(content.encode('utf8'))
 
     # Copy and render templates
     for filename in TEMPLATES:
-        template = resource_string(__name__, 'templates/{0}'.format(filename))
+        template = resource_string(__name__, 'templates/{0}'.format(filename)).decode('utf8')
         content = template.format(**params)
         with open(join(project_dir, filename), 'wb') as f:
             f.write(content.encode('utf8'))
 
     # Create an empty package
     os.mkdir(join(project_dir, project))
-    template = resource_string(__name__, 'templates/__init__.py')
+    template = resource_string(__name__, 'templates/__init__.py').decode('utf8')
     content = template.format(**params)
     with open(join(project_dir, project, '__init__.py'), 'wb') as f:
         f.write(content.encode('utf8'))
@@ -82,5 +82,5 @@ def template(args):
         f.write('\n'.join([
             '-r {0}.pip'.format(basename) for basename in REQUIREMENTS
         ]).encode('utf8'))
-        f.write('\n')
+        f.write('\n'.encode('utf8'))
 
